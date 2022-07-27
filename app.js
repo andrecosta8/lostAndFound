@@ -13,7 +13,8 @@ require('./server/setup/express')(app);
 require('./server/setup/mongoose')();
 
 // Set up routes.
-app.use('/', require('./server/routes'));
+const allRoutes = require("./server/routes/index");
+app.use('/', allRoutes);
 
 // Start app.
 app.listen(PORT, function() {

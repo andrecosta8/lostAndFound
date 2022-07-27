@@ -1,5 +1,5 @@
 {
-  "name": "node-js-skeleton",
+  "name": "lost-and-found",
   "version": "1.0.0",
   "scripts": {
     "start": "node app.js",
