@@ -8,7 +8,7 @@ const Item = require('../models/items');
 let router = express.Router();
 
 // To confirm setup only.
-router.get('/', function (req, res) { return res.send('Hello world!'); });
+router.get('/', function (req, res) { return res.send('Find your lost items here!!'); });
 router.use(require("./adminRoutes"));
 
 
@@ -18,7 +18,7 @@ router.get("/showItems", async (req, res) => {
         const allItems = await Item.find();
         res.status(200).json(allItems);
     } catch (err) {
-        res.status(400).json({ message: "No items to show" })
+        res.status(400).json({ message: "Error fetching database" })
     }
 })
 
@@ -29,19 +29,26 @@ router.get("/showItems/:id", async (req, res) => {
         const singleItem = await Item.findById(id);
         res.status(200).json(singleItem);
     } catch (err) {
-        res.status(400).json({ message: "Error fetching the item info" });
+        res.status(400).json({ message: "Error fetching database" });
     }
 })
 
 // Show items by search
 router.get("/search", async (req, res) => {
     try {
-        const{ searchKeywords } = req.body;
-        searchKeywords = searchKeywords.toLocaleLowerCase();
-        const searchItem = await Item.findAll(searchKeywords)
+        const { keyWords } = req.body;
+        const lowerCaseKeyWords = keyWords.toLowerCase();
+        const searchItem = await Item.find(
+            {$or:[
+                {typeOfProduct: lowerCaseKeyWords},
+                {brand: lowerCaseKeyWords},
+                {color: lowerCaseKeyWords},
+                {description: lowerCaseKeyWords},
+            ]}  
+        )
         res.status(200).json(searchItem);
     } catch (err) {
-        res.status(400).json({ message: "No items found" });
+        res.status(400).json({ message: "Error fetching database" });
     }
 })
 
