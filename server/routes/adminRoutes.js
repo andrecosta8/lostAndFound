@@ -4,7 +4,6 @@ const Item = require('../models/items');
 let router = express.Router();
 
 
-
 // Create new item
 router.post("/admin/newItem", async (req, res) => {
     try {
@@ -21,6 +20,17 @@ router.post("/admin/newItem", async (req, res) => {
         res.status(200).json({ message: "Succesfully created item" })
     } catch (err) {
         res.status(400).json({ message: "Something went wrong, please repeat" })
+    }
+})
+
+// Delete item 
+router.delete("/admin/:id", async (req, res) => {
+    try {
+        const {id} = req.params;
+        await Item.findByIdAndDelete(id);
+        res.status(200).json({message: "Item deleted"});
+    }catch(err){
+        res.status(400).json({message:"Item not deleted, something went wrong"})
     }
 })
 
