@@ -20,11 +20,6 @@ const itemSchema = new mongoose.Schema({
         type: Date,
         max: Date.now()
     },
-    // createdBy: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "users",
-    //     required: true,
-    // },
 },
     { timestamps: true },
 )

@@ -1,6 +1,6 @@
-# NodeJS Skeleton for Airport AI
+# Lost and Found App for airports
 
-This repository includes a NodeJS / Express / MongoDB skeleton app.
+This repository includes a REST API to use as a Lost and Found system in airports, where passsenger can see items lost in airport. Also airport agent can create and delete items. 
 
 ## Setup
 
@@ -15,7 +15,12 @@ npm install
 
 On the root of this app, run the following command to run the application:
 ```
+npm run dev
+```
+or 
+
+```
 npm start
 ```
 
-If everything is ok, you should see a 'Hello world!' message when you go to 'http://localhost:3000' on your browser.
+If everything is ok, you should see a 'Find your lost items here!' message when you go to 'http://localhost:3000' on your browser.
