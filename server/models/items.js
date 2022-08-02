@@ -18,7 +18,8 @@ const itemSchema = new mongoose.Schema({
     },
     lostDate: {
         type: Date,
-        max: Date.now()
+        max: Date.now(),
+        required: true,
     },
 },
     { timestamps: true },

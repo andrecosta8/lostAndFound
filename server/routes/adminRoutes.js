@@ -1,13 +1,13 @@
 let express = require('express');
 const Item = require('../models/items');
 let router = express.Router();
-
+const itemValidation = require("../middleware/newItemValidation");
 
 
 // Create new item
-router.post("/admin/newItem", async (req, res) => {
+router.post("/admin/newItem", itemValidation, async (req, res) => {
+    const { typeOfProduct, brand, color, description, lostDate } = req.body;
     try {
-        const { typeOfProduct, brand, color, description, lostDate } = req.body;
         const newItem = new Item({
             typeOfProduct,
             brand,

@@ -1,6 +1,7 @@
 let express = require('express');
 const Item = require('../models/items');
 let router = express.Router();
+const inputValidation = require("../middleware/passengerInputValidation");
 
 
 // Show all lost items 
@@ -13,7 +14,7 @@ router.get("/showItems", async (req, res) => {
     }
 })
 
-// Show one item [in case the for see more details]
+// Show one item [in case the need for see more details]
 router.get("/showItems/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -25,10 +26,13 @@ router.get("/showItems/:id", async (req, res) => {
 })
 
 // Show items by search [searching by inputs of keyWords and lostTime and show all matched items]
-router.get("/search", async (req, res) => {
+router.get("/search", inputValidation, async (req, res) => {
     try {
-        const { keyWords, lostTime } = req.body;
+        const { keyWords, lostTimeSince, lostTimeUntil } = req.body;
         const lowerCaseKeyWords = keyWords.toLowerCase().split(" ");
+        const timeSince = `${lostTimeSince}:00.000Z`
+        const timeUntil = `${lostTimeUntil}:00.000Z`
+        console.log(timeSince)
         const searchItem = await Item.find(
             {
                 $or: [
@@ -36,8 +40,10 @@ router.get("/search", async (req, res) => {
                     { brand: lowerCaseKeyWords },
                     { color: lowerCaseKeyWords },
                     { description: lowerCaseKeyWords },
-                    { lostDate: lostTime }
-                ]   
+                ],
+                $and: [
+                    { lostDate: { $gte:ISODate(timeSince) , $lte:ISODate(timeUntil) }}
+                ],
             }
         )
         if (searchItem.length === 0) {
