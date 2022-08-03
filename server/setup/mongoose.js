@@ -6,7 +6,6 @@
 let mongoose = require('mongoose');
 const DATABASE_URL = 'mongodb://127.0.0.1:27017/LostAndFound';
 
-
 module.exports = setup;
 
 /**
@@ -37,6 +36,7 @@ function setup() {
 
   return connectToDb().then(function() {
 
+    
     // Set up all models.
     require('../models');
     return;

@@ -13,17 +13,17 @@ const inputValidation = (req, res, next) => {
     let date2 = new Date(lostTimeUntil)
     let date3 = Date.now();
 
-    if (lostTimeSince.match(dateRegex) === null 
-    || lostTimeUntil.match(dateRegex) === null
-    || date1 > date3
-    || date1 > date2 
-    || date2 > date3) {
-        return res.status(401).json({ message: "Please enter a valid past date and time format yyyy-mm-ddThh:mm (e.g. 2000-01-01T00:00)" })
+    if (lostTimeSince.match(dateRegex) === null
+        || lostTimeUntil.match(dateRegex) === null
+        || date1 > date3
+        || date1 > date2
+        || date2 > date3) {
+        return res.status(400).json({ errorMessage: "Please enter a valid past date and time format yyyy-mm-ddThh:mm (e.g. 2000-01-01T00:00)" })
     }
     if (typeof keyWords !== "string"
         || keyWords.match(regex) === null
         || keyWords.length < 2) {
-        return res.status(401).json({ message: "Please enter a valid keyword(at least 2 letters, only letters and numbers) TIP: brand, color, type of product" })
+        return res.status(400).json({ errorMessage: "Please enter a valid keyword(at least 2 letters, only letters and numbers) TIP: brand, color, type of product" })
     }
     return next();
 }

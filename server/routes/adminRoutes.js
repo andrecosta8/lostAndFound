@@ -18,8 +18,9 @@ router.post("/admin/newItem", itemValidation, async (req, res) => {
         await newItem.save();
         res.status(201).json({ message: "Succesfully created item" })
     } catch (err) {
-        res.status(400).json({ message: "Error creating item" })
+        res.status(400).json({ errorMessage: "Error creating item" })
     }
+
 })
 
 // Delete item 
@@ -29,7 +30,7 @@ router.delete("/admin/:id", async (req, res) => {
         await Item.findByIdAndDelete(id);
         res.status(204).json({ message: "Item deleted" });
     } catch (err) {
-        res.status(400).json({ message: "Error deleting item" })
+        res.status(400).json({ errorMessage: "Error deleting item" })
     }
 })
 

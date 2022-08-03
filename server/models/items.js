@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const itemSchema = new mongoose.Schema({
     typeOfProduct: {
         type: String,
-        required: true
+        required: true,
     },
     brand: {
         type: String,
@@ -24,6 +24,8 @@ const itemSchema = new mongoose.Schema({
 },
     { timestamps: true },
 )
+
+itemSchema.index({'$**': 'text'});
 
 let Item = mongoose.model('items', itemSchema);
 
